@@ -164,14 +164,14 @@ def proses_update_film(judul_film, category, descp, rating, kualitas, stock, sta
   except Exception as e:
     return responseJSON(400, 'F', str(e), [])
 
-def sewa_film(no_id_sewa, no_id_film, user_sewa, tgl_buat, nama_file):
+def sewa_film(no_id_sewa, no_id_film, user_sewa, tgl_buat):
   customQuery = QueryStringDb("POSTGRES")
   # print(customQuery)
   v_query = '''INSERT INTO DVD_STORE_SEWA
           (SEWA_ID, SEWA_ID_DVD, SEWA_ID_USER, SEWA_TGL_BUAT, SEWA_FILE, SEWA_STATUS )
-          VALUES(%s, %s, %s, %s, %s, 'F' );
+          VALUES(%s, %s, %s, %s, 'F' );
         '''
-  v_kondisi = (no_id_sewa, no_id_film, user_sewa, tgl_buat, nama_file, )
+  v_kondisi = (no_id_sewa, no_id_film, user_sewa, tgl_buat, )
   print(v_kondisi)
   v_hasil = customQuery.execute(v_query, v_kondisi)
   return v_hasil
