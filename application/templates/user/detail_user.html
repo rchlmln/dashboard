@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+{% block head %}
+  {{ super() }}
+
+<style type="text/css">
+.important { color: #336699; }
+
+.warning {
+  background-color: #ffffcc;
+  border-left: 6px solid #ffeb3b;
+} 
+
+#table-scroll {
+  height:550px;
+  overflow:auto;
+
+}
+</style>
+
+
+{% endblock %}
+
+{% block content %}
+<section class="content-wrapper" >
+  <div class="content-header">
+    <div class="container">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h4 class="m-0">Update Detail User</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="container">
+      <div class="col-12">
+        <div class="card card-primary card-outline">
+          <div class="card-header">
+            <h5 class="card-title m-0">Detail User</h5>
+          </div>
+        <div class="card-body">
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12 col-md-6 col-lg-6">
+                 
+                  <div class="form-group row">
+                    <label for="inputBranch" class="col-sm-5 col-form-label">No KTA</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control" id="no_kta" name="no_kta" value="{{dataDetailUser[0]['user_kta']}}" readonly>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="inputJabatan" class="col-sm-5 col-form-label">Nama</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control" id="nama" name="nama" value="{{dataDetailUser[0]['user_nama']}}" >
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="col-12 col-md-6 col-lg-6">
+                  <div class="form-group row">
+                    <label for="inputNama" class="col-sm-5 col-form-label">Role</label>
+                    <div class="col-sm-7">
+                      <select style="width: 100%;" required="true" name="role" id="role" class="form-control">
+                        <option selected hidden="">{% if(dataDetailUser[0]['user_role']=="sys") %}Admin{% elif(dataDetailUser[0]['user_role']=="cus")%}Customer{% endif %}</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Customer">Customer</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="inputNama" class="col-sm-5 col-form-label">PIN</label>
+                    <div class="col-sm-7">
+                      <input type="password" class="form-control" id="pin" name="pin" value="{{dataDetailUser[0]['user_pin']}}" >
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="inputFaktur" class="col-sm-5 col-form-label">Status Aktif</label>
+                    <div class="col-sm-7">
+                      <select style="width: 100%;" required="true" name="status" id="status" class="form-control">
+                        <option selected hidden="">{% if(dataDetailUser[0]['user_aktif']=="T") %}Aktif{% elif(dataDetailUser[0]['user_aktif']=="F")%}Tidak Aktif{% endif %}</option>
+                        <option value="Aktif">Aktif</option>
+                        <option value="Tidak Aktif">Tidak Aktif</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="card">
+              <div class="card-footer">  
+                <button type="button" class="btn btn-success" style="float: right;" onclick="simpan();">Simpan</button>
+              </div>
+            </div>
+
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<div class="modal fade" id="modal-success" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-success">
+        <h4 class="modal-title">Update Data</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBodySuccess">
+        <p id="content-success"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn-close-success" class="btn btn-outline-success" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-danger" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger">
+        <h4 class="modal-title">Peringatan</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBodyDanger">
+        <p id="content-danger"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn-close-danger" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+  function alertSuccess(pesan){
+    $("#modalBodySuccess #content-success").html(pesan);
+    $('#modal-success').modal('show');
+  }
+
+  function alertWarning(pesan){
+    $("#modalBodyDanger #content-danger").html(pesan);
+    $('#modal-danger').modal('show');
+  }
+
+
+function simpan(){
+
+  $.ajax({
+      type: 'POST',
+      url: "{{ url_for('user.proses_update_user') }}",
+      data: {
+              'no_kta' : $('#no_kta').val(),
+              'nama' : $('#nama').val(),
+              'role' : $('#role').val(),
+              'pin' : $('#pin').val(),
+              'status': $('#status').val()
+          },
+      dataType: 'json',
+      success: function(data) {
+          if (data.status == "T") {
+            alertSuccess(data.message);
+            $("#btn-close-success").on("click", function(){
+              document.location.reload();
+            });
+            
+
+          }else{
+            alertWarning(data.message);
+            $("#btn-close-danger").on("click", function(){
+              document.location.reload();
+            });
+          }
+      },
+      error: function (e) {
+          document.location.reload();
+          alert('Internal server eror');
+      }
+  });
+}
+
+</script>
+
+
+
+
+{% endblock content %}
