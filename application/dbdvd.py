@@ -146,11 +146,11 @@ def sewa_film(no_id_sewa, no_id_film, user_sewa, tgl_buat):
   customQuery = QueryStringDb("POSTGRES")
   # print(customQuery)
   v_query = '''INSERT INTO DVD_STORE_SEWA
-          (SEWA_ID, SEWA_ID_DVD, SEWA_ID_USER, SEWA_TGL_BUAT, SEWA_FILE, SEWA_STATUS )
+          (SEWA_ID, SEWA_ID_DVD, SEWA_ID_USER, SEWA_TGL_BUAT, SEWA_STATUS )
           VALUES(%s, %s, %s, %s, 'F' );
         '''
   v_kondisi = (no_id_sewa, no_id_film, user_sewa, tgl_buat, )
-  print(v_kondisi)
+  # print(v_kondisi)
   v_hasil = customQuery.execute(v_query, v_kondisi)
   return v_hasil
 
