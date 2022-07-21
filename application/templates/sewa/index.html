@@ -97,7 +97,7 @@
                     </div>
                   </div>
 
-                  <div class="form-group row">
+<!--                   <div class="form-group row">
                     <label for="file_upload" class="col-sm-5 col-form-label">Upload File</label>
                     <div class="col-sm-7">
                         <input type="file" id="file_upload" name="file_upload" onchange="ValidateSingleInput(this);"  required >
@@ -106,7 +106,7 @@
                     <div class="warning">
                     <p><strong>Note. </strong>Silahkan upload file bukti pembayaran untuk melakukan proses pengajuan Sewa</p>
                     </div>
-                  </div>
+                  </div> -->
                   
                   
 
@@ -220,9 +220,9 @@ function alertWarning(pesan){
 
 function simpan(obj){
   var form_data = new FormData();
-  file = $('#file_upload').prop('files')[0];
+//   file = $('#file_upload').prop('files')[0];
 
-  form_data.append("file_upload", file);
+//   form_data.append("file_upload", file);
   form_data.append("no_id_film", $('#no_id_film').val());
 
   $.ajax({
