@@ -152,9 +152,9 @@ def sewa():
 @login_required
 def proses_pengajuan_sewa():
 
-    uploaded_file = request.files.get('file_upload') # This line uses the same variable and worked fine
-    filepath = os.path.join(app.config['FILE_BUKTI_SEWA'], uploaded_file.filename)
-    uploaded_file.save(filepath)
+#     uploaded_file = request.files.get('file_upload') # This line uses the same variable and worked fine
+#     filepath = os.path.join(app.config['FILE_BUKTI_SEWA'], uploaded_file.filename)
+#     uploaded_file.save(filepath)
 
     today = date.today()
     tgl_buat = today
@@ -162,7 +162,7 @@ def proses_pengajuan_sewa():
 
     no_id_film = request.form.get('no_id_film', None)
     # print(no_id_film)
-    nama_file = uploaded_file.filename
+#     nama_file = uploaded_file.filename
     # print(nama_file)
 
     kode = getLastID_sewa()
@@ -183,7 +183,7 @@ def proses_pengajuan_sewa():
     kurang_stock = int(data_jml_stock) - int(ambil_stock) 
     # print(kurang_stock)
 
-    response = sewa_film(no_id_sewa, no_id_film, user_sewa, tgl_buat, nama_file)
+    response = sewa_film(no_id_sewa, no_id_film, user_sewa, tgl_buat)
     response = update_stock(kurang_stock, no_id_film)
     # print(response)
 
