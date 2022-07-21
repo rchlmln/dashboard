@@ -20,28 +20,6 @@ def getDataUser(v_user):
   print(v_hasil)
   return v_hasil
 
-# def getDataUserWithPIN(v_user, v_pin):
-#   '''query SELECT data user berdasarkan nik '''
-#   customQuery = QueryStringDb("POSTGRES")
-#   v_query = '''SELECT USER_KTA, USER_NAMA, USER_ROLE, USER_PIN
-#         FROM DVD_STORE_USER
-#         WHERE USER_KTA = %s AND USER_PIN = %s ''' 
-#   v_kondisi = (v_user, v_pin, )
-#   v_hasil = customQuery.select(v_query, v_kondisi)
-#   # print(v_hasil)
-#   return v_hasil
-
-# def getDataUser(v_user):
-#   '''query SELECT data user berdasarkan nik '''
-#   customQuery = QueryStringDb("POSTGRES")
-#   v_query = '''SELECT nik, kd_branch, kd_jabatan, act
-#         FROM mrat_nik_giliran_app
-#         WHERE nik = %s ''' 
-#   v_kondisi = (v_user,)
-#   v_hasil = customQuery.select(v_query, v_kondisi)
-#   # print(v_hasil)
-#   return v_hasil
-
 def getLastID():
   customQuery = QueryStringDb("POSTGRES")
   try:
