@@ -187,6 +187,10 @@ def proses_pengajuan_sewa():
     print(response)
 
     response = update_stock(kurang_stock, no_id_film)
-    
+    print(response)
     return response
+
+
+
+
 
